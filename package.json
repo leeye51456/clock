@@ -1,0 +1,13 @@
+{
+  "name": "clock",
+  "version": "1.0.0-dev",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/leeye51456/clock.git",
+  "author": {
+    "name": "leeye51456",
+    "url": "https://github.com/leeye51456"
+  },
+  "bugs": "https://github.com/leeye51456/clock/issues",
+  "private": true
+}
