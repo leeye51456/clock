@@ -12,6 +12,10 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
   },
 
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
+
   module: {
     rules: [
       {
