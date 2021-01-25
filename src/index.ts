@@ -1,3 +1,3 @@
-import Clock from './Clock';
+import clock from './clock';
 
-Clock.initialize();
+clock.initialize();
