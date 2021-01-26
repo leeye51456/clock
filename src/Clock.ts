@@ -30,8 +30,8 @@ class Clock extends AbstractComponent {
 
   private update(): void {
     const date: Dayjs = dayjs(new Date());
-    this.timeSection.innerText = dayjs(date).format('hh:mm:ss');
-    this.dateSection.innerText = dayjs(date).format('YYYY-MM-DD');
+    this.timeSection.innerText = date.format('hh:mm:ss');
+    this.dateSection.innerText = date.format('YYYY-MM-DD');
   }
 }
 
