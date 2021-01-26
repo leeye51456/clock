@@ -1,3 +1,5 @@
+import dayjs, { Dayjs } from 'dayjs';
+
 let initialized: boolean = false;
 const elements: {
   timeSection: HTMLElement,
@@ -19,27 +21,9 @@ function initialize(): boolean {
 }
 
 function update(): void {
-  const date: Date = new Date();
-  elements.timeSection.innerText = twoDigits`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  elements.dateSection.innerText = twoDigits`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-}
-
-function twoDigits(strings: TemplateStringsArray, ...args: any[]): string {
-  let result = '';
-  const argCount = args.length;
-  for (let i = 0; i < argCount; i += 1) {
-    result += `${strings[i]}${typeof args[i] === 'number' ? fillLeadingZeros(args[i], 2) : args[i]}`;
-  }
-  return `${result}${strings[argCount]}`;
-}
-
-function fillLeadingZeros(value: number, displayLength: number): string {
-  const stringValue: string = value.toString();
-  const numberLength: number = stringValue.length;
-  if (numberLength >= displayLength) {
-    return stringValue;
-  }
-  return `${new Array(displayLength - numberLength).fill('0').join('')}${stringValue}`;
+  const date: Dayjs = dayjs(new Date());
+  elements.timeSection.innerText = dayjs(date).format('hh:mm:ss');
+  elements.dateSection.innerText = dayjs(date).format('YYYY-MM-DD');
 }
 
 export default {
