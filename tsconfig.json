@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
+    "moduleResolution": "Node",
     "noImplicitAny": true,
     "outDir": "./dist/",
     "skipLibCheck": true,
