@@ -1,4 +1,5 @@
-import clock from './clock';
+import Clock from './Clock';
 import './index.css';
 
-clock.initialize();
+const clock = new Clock();
+clock.draw(document.querySelector('.clock'));
