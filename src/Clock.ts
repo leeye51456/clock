@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import { format } from 'date-fns';
 import AbstractComponent from './AbstractComponent';
 
 class Clock extends AbstractComponent {
@@ -29,9 +29,9 @@ class Clock extends AbstractComponent {
   }
 
   private update(): void {
-    const date: Dayjs = dayjs(new Date());
-    this.timeSection.innerText = date.format('hh:mm:ss');
-    this.dateSection.innerText = date.format('YYYY-MM-DD');
+    const date: Date = new Date();
+    this.timeSection.innerText = format(date, 'HH:mm:ss');
+    this.dateSection.innerText = format(date, 'y-MM-dd');
   }
 }
 
