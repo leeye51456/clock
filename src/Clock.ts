@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import * as locale from 'date-fns/locale'; // FIXME - Reduce size (~500KB)
 import AbstractComponent from './AbstractComponent';
 
 interface OptionalDateTimeFormat {
@@ -13,6 +14,23 @@ interface DateTimeFormat extends OptionalDateTimeFormat {
 
 interface ClockOptions {
   format?: OptionalDateTimeFormat,
+  locale?: string,
+}
+
+const localeObject: { [key: string]: Locale } = { ...locale };
+const localeKeys: Set<string> = new Set(Object.keys(localeObject));
+
+// See https://tools.ietf.org/rfc/bcp/bcp47.txt
+function toLocaleKey(bcp47Locale: string): string {
+  const codes: string[] = bcp47Locale.split('-');
+  while (codes.length > 0) {
+    const partialLocale = codes.join('');
+    if (localeKeys.has(partialLocale)) {
+      return partialLocale;
+    }
+    codes.pop();
+  }
+  throw RangeError();
 }
 
 class Clock extends AbstractComponent {
@@ -26,6 +44,8 @@ class Clock extends AbstractComponent {
     time: 'HH:mm:ss',
   };
 
+  private localeKey: string = 'enUS';
+
   constructor(options?: ClockOptions) {
     super();
 
@@ -36,6 +56,16 @@ class Clock extends AbstractComponent {
       ...this.format,
       ...options?.format,
     };
+
+    try {
+      if (typeof options?.locale === 'string') {
+        this.locale = options.locale;
+      } else {
+        this.locale = navigator.language;
+      }
+    } catch (e) {
+      // Do nothing
+    }
 
     this.update();
   }
@@ -56,8 +86,16 @@ class Clock extends AbstractComponent {
 
   private update(): void {
     const date: Date = new Date();
-    this.timeSection.innerText = format(date, this.format.time);
-    this.dateSection.innerText = format(date, this.format.date);
+    const options = { locale: localeObject[this.localeKey] };
+    this.timeSection.innerText = format(date, this.format.time, options);
+    this.dateSection.innerText = format(date, this.format.date, options);
+  }
+
+  get locale(): string {
+    return this.localeKey;
+  }
+  set locale(value: string) {
+    this.localeKey = toLocaleKey(value);
   }
 }
 
