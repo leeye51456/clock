@@ -1,0 +1,9 @@
+{
+  "short_name": "Clock",
+  "name": "Clock",
+  "categories": ["utilities"],
+  "start_url": ".",
+  "display": "fullscreen",
+  "theme_color": "#808080",
+  "background_color": "#808080"
+}
