@@ -66,8 +66,6 @@ class Clock extends AbstractComponent {
     } catch (e) {
       // Do nothing
     }
-
-    this.update();
   }
 
   protected drawChildren(): void {
