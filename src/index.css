@@ -30,3 +30,10 @@ main {
   text-align: center;
   font-size: 5vw;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+    color: #c0c0c0;
+  }
+}
