@@ -48,6 +48,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html',
+      excludeChunks: ['sw'],
     }),
 
     new MiniCssExtractPlugin({
