@@ -6,10 +6,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
-  entry: './src/index.ts',
+  entry: {
+    index: './src/index.ts',
+    sw: './src/sw.ts',
+  },
 
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
 
