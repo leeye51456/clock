@@ -28,6 +28,10 @@ function toBcp47(localeKey) {
 }
 
 function makeLocaleFile(localeKey) {
+  if (localeKey === 'enUS') {
+    return;
+  }
+
   const script = `import ${localeKey} from 'date-fns/locale/${toBcp47(localeKey)}';\nexport default ${localeKey};\n`;
   fs.writeFileSync(`${modulesPath}/${localeKey}.ts`, script, { mode: 0o644 });
 }

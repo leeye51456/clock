@@ -91,7 +91,17 @@ class Clock extends AbstractComponent {
     return this.localeKey;
   }
   set locale(value: string) {
-    this.localeKey = toLocaleKey(value);
+    try {
+      this.localeKey = toLocaleKey(value);
+    } catch (error) {
+      this.localeKey = 'enUS';
+    }
+
+    if (this.localeKey === 'enUS') {
+      this.localeObject = undefined;
+      this.update();
+      return;
+    }
 
     // TODO - Remove flashing language
     import(
