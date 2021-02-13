@@ -110,11 +110,11 @@ class Clock extends AbstractComponent {
     )
       .then((module) => {
         this.localeObject = module.default;
-        this.update();
       })
       .catch(() => {
         this.localeObject = undefined;
-      });
+      })
+      .then(() => this.update());
   }
 }
 
