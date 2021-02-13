@@ -13,6 +13,7 @@ const config = {
 
   output: {
     filename: '[name].js',
+    chunkFilename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
 
