@@ -8,6 +8,7 @@
       "DOM.Iterable",
       "WebWorker"
     ],
+    "module": "ESNext",
     "moduleResolution": "Node",
     "noImplicitAny": true,
     "outDir": "./dist/",
