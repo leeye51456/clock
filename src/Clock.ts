@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import * as locale from 'date-fns/locale'; // FIXME - Reduce size (~500KB)
+import { format, Locale } from 'date-fns';
+import localeKeys from './locale/keys';
 import AbstractComponent from './AbstractComponent';
 
 interface OptionalDateTimeFormat {
@@ -16,9 +16,6 @@ interface ClockOptions {
   format?: OptionalDateTimeFormat,
   locale?: string,
 }
-
-const localeObject: { [key: string]: Locale } = { ...locale };
-const localeKeys: Set<string> = new Set(Object.keys(localeObject));
 
 // See https://tools.ietf.org/rfc/bcp/bcp47.txt
 function toLocaleKey(bcp47Locale: string): string {
@@ -45,6 +42,7 @@ class Clock extends AbstractComponent {
   };
 
   private localeKey: string = 'enUS';
+  private localeObject: Locale | undefined = undefined;
 
   constructor(options?: ClockOptions) {
     super();
@@ -84,7 +82,7 @@ class Clock extends AbstractComponent {
 
   private update(): void {
     const date: Date = new Date();
-    const options = { locale: localeObject[this.localeKey] };
+    const options = { locale: this.localeObject };
     this.timeSection.innerText = format(date, this.format.time, options);
     this.dateSection.innerText = format(date, this.format.date, options);
   }
@@ -94,6 +92,19 @@ class Clock extends AbstractComponent {
   }
   set locale(value: string) {
     this.localeKey = toLocaleKey(value);
+
+    // TODO - Remove flashing language
+    import(
+      /* webpackChunkName: "locale/[request]" */
+      `./locale/modules/${this.localeKey}`
+    )
+      .then((module) => {
+        this.localeObject = module.default;
+        this.update();
+      })
+      .catch(() => {
+        this.localeObject = undefined;
+      });
   }
 }
 
