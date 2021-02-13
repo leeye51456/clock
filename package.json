@@ -11,7 +11,11 @@
   "bugs": "https://github.com/leeye51456/clock/issues",
   "private": true,
   "scripts": {
+    "make-locales": "node ./scripts/make-locales",
+    "postinstall": "yarn run make-locales",
+    "prestart": "yarn run make-locales",
     "start": "webpack serve --mode=development",
+    "prebuild": "yarn run make-locales",
     "build": "webpack --mode=production"
   },
   "devDependencies": {

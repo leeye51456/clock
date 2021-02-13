@@ -1,6 +1,8 @@
 *.deprecated
 *.deprecated.*
 
+/src/locale
+
 ##### From https://github.com/github/gitignore.git #####
 
 ##### From `/Global/macOS.gitignore` #####
