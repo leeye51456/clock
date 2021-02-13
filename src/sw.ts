@@ -15,14 +15,17 @@ self.addEventListener('install', (event: any) => {
 });
 
 self.addEventListener('fetch', (event: any) => {
-  const responsePromise: Promise<Response> = caches.match(event.request)
-    .then((response?: Response) => {
-      if (response) {
-        console.log('Cache hit');
-        return response;
+  const responsePromise: Promise<Response | undefined> = fetch(event.request)
+    .then((response: Response) => {
+      const responseToCache: Response = response.clone();
+      if (responseToCache.ok) {
+        caches.open(cacheName)
+          .then((cache: Cache) => cache.put(event.request, responseToCache));
       }
-      console.log('Cache miss');
-      return fetch(event.request);
+      return response;
+    })
+    .catch(() => {
+      return caches.match(event.request);
     });
   event.respondWith(responsePromise);
 });
