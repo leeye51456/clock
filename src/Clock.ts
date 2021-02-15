@@ -57,9 +57,9 @@ class Clock extends AbstractComponent {
 
     try {
       if (typeof options?.locale === 'string') {
-        this.locale = options.locale;
+        this.setLocale(options.locale);
       } else {
-        this.locale = navigator.language;
+        this.setLocale(navigator.language);
       }
     } catch (e) {
       // Do nothing
@@ -87,10 +87,7 @@ class Clock extends AbstractComponent {
     this.dateSection.innerText = format(date, this.format.date, options);
   }
 
-  get locale(): string {
-    return this.localeKey;
-  }
-  set locale(value: string) {
+  setLocale(value: string): void {
     try {
       this.localeKey = toLocaleKey(value);
     } catch (error) {
