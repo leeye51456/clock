@@ -3,18 +3,18 @@ import { LocaleKey, isLocaleKey } from './locale/keys';
 import AbstractComponent from './AbstractComponent';
 
 interface OptionalDateTimeFormat {
-  date?: string,
-  time?: string,
+  date?: string;
+  time?: string;
 }
 
 interface DateTimeFormat extends OptionalDateTimeFormat {
-  date: string,
-  time: string,
+  date: string;
+  time: string;
 }
 
 interface ClockOptions {
-  format?: OptionalDateTimeFormat,
-  locale?: string,
+  format?: OptionalDateTimeFormat;
+  locale?: string;
 }
 
 // See https://tools.ietf.org/rfc/bcp/bcp47.txt
