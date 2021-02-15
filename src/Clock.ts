@@ -69,7 +69,6 @@ class Clock extends AbstractComponent {
   protected drawChildren(): void {
     if (this.baseNode) {
       this.intervalId = window.setInterval(this.update.bind(this), 1000);
-      this.update();
       this.baseNode.append(this.timeSection, this.dateSection);
     }
   }
@@ -100,7 +99,6 @@ class Clock extends AbstractComponent {
       return;
     }
 
-    // TODO - Remove flashing language
     import(
       /* webpackChunkName: "locale/[request]" */
       `./locale/modules/${this.localeKey}`
