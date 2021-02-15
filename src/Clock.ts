@@ -87,29 +87,34 @@ class Clock extends AbstractComponent {
   }
 
   setLocale(value: string): void {
+    let localeKey: string;
     try {
-      this.localeKey = toLocaleKey(value);
+      localeKey = toLocaleKey(value);
     } catch (error) {
-      this.localeKey = 'enUS';
+      localeKey = 'enUS';
     }
 
-    if (this.localeKey === 'enUS') {
-      this.localeObject = undefined;
+    if (localeKey === 'enUS') {
+      this.setLocaleToFallback();
       this.update();
       return;
     }
 
     import(
       /* webpackChunkName: "locale/[request]" */
-      `./locale/modules/${this.localeKey}`
+      `./locale/modules/${localeKey}`
     )
       .then((module) => {
+        this.localeKey = localeKey;
         this.localeObject = module.default;
       })
-      .catch(() => {
-        this.localeObject = undefined;
-      })
+      .catch(() => this.setLocaleToFallback())
       .then(() => this.update());
+  }
+
+  setLocaleToFallback(): void {
+    this.localeKey = 'enUS';
+    this.localeObject = undefined;
   }
 }
 
