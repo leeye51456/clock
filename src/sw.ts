@@ -8,9 +8,7 @@ const urlsToCache: string[] = [
 
 self.addEventListener('install', (event: any) => {
   const promise: Promise<void> = caches.open(cacheName)
-    .then((cache: Cache) => {
-      return cache.addAll(urlsToCache);
-    });
+    .then((cache: Cache) => cache.addAll(urlsToCache));
   event.waitUntil(promise);
 });
 
@@ -24,8 +22,6 @@ self.addEventListener('fetch', (event: any) => {
       }
       return response;
     })
-    .catch(() => {
-      return caches.match(event.request);
-    });
+    .catch(() => caches.match(event.request));
   event.respondWith(responsePromise);
 });
