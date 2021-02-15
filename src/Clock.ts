@@ -1,5 +1,5 @@
 import { format, Locale } from 'date-fns';
-import localeKeys from './locale/keys';
+import { LocaleKey, isLocaleKey } from './locale/keys';
 import AbstractComponent from './AbstractComponent';
 
 interface OptionalDateTimeFormat {
@@ -18,11 +18,11 @@ interface ClockOptions {
 }
 
 // See https://tools.ietf.org/rfc/bcp/bcp47.txt
-function toLocaleKey(bcp47Locale: string): string {
+function toLocaleKey(bcp47Locale: string): LocaleKey {
   const codes: string[] = bcp47Locale.split('-');
   while (codes.length > 0) {
-    const partialLocale = codes.join('');
-    if (localeKeys.has(partialLocale)) {
+    const partialLocale: string = codes.join('');
+    if (isLocaleKey(partialLocale)) {
       return partialLocale;
     }
     codes.pop();
@@ -41,7 +41,7 @@ class Clock extends AbstractComponent {
     time: 'HH:mm:ss',
   };
 
-  private localeKey: string = 'enUS';
+  private localeKey: LocaleKey = 'enUS';
   private localeObject: Locale | undefined = undefined;
 
   constructor(options?: ClockOptions) {
@@ -87,7 +87,7 @@ class Clock extends AbstractComponent {
   }
 
   setLocale(value: string): void {
-    let localeKey: string;
+    let localeKey: LocaleKey;
     try {
       localeKey = toLocaleKey(value);
     } catch (error) {

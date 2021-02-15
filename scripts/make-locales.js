@@ -36,6 +36,19 @@ function makeLocaleFile(localeKey) {
   fs.writeFileSync(`${modulesPath}/${localeKey}.ts`, script, { mode: 0o644 });
 }
 
+function constructKeysFile(locales) {
+  return `export type LocaleKey = '${locales.join("' | '")}';
+
+const localeKeys = new Set<LocaleKey>(['${locales.join("', '")}']);
+
+export function isLocaleKey(value: string): value is LocaleKey {
+  return localeKeys.has(value as LocaleKey);
+}
+
+export default localeKeys;
+`;
+}
+
 function makeLocales() {
   fs.mkdirSync(modulesPath, {
     recursive: true,
@@ -45,11 +58,7 @@ function makeLocales() {
   const locales = Object.keys(locale);
   locales.forEach(makeLocaleFile);
 
-  fs.writeFileSync(
-    `${localePath}/keys.ts`,
-    `export default new Set<string>(['${locales.join("','")}']);\n`,
-    { mode: 0o644 }
-  );
+  fs.writeFileSync(`${localePath}/keys.ts`, constructKeysFile(locales), { mode: 0o644 });
 }
 
 cleanLocales();
