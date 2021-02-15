@@ -17,8 +17,8 @@ self.addEventListener('install', (event: any) => {
 self.addEventListener('fetch', (event: any) => {
   const responsePromise: Promise<Response | undefined> = fetch(event.request)
     .then((response: Response) => {
-      const responseToCache: Response = response.clone();
-      if (responseToCache.ok) {
+      if (response.ok) {
+        const responseToCache: Response = response.clone();
         caches.open(cacheName)
           .then((cache: Cache) => cache.put(event.request, responseToCache));
       }
