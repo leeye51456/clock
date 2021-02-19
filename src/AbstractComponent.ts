@@ -1,13 +1,13 @@
 abstract class AbstractComponent {
-  protected baseNode: ParentNode | null;
+  protected baseNode: HTMLElement | null;
 
   constructor() {
     this.baseNode = null;
   }
 
-  draw(baseNode: Element | ParentNode | null): void {
+  draw(baseNode: HTMLElement | null): void {
     if (!this.baseNode && baseNode) {
-      this.baseNode = baseNode as ParentNode;
+      this.baseNode = baseNode;
       for (let i = this.baseNode.children.length - 1; i >= 0; i -= 1) {
         this.baseNode.children[i].remove();
       }
