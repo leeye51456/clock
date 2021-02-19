@@ -21,8 +21,8 @@ abstract class AbstractComponent {
     if (this.baseNode) {
       this.release();
 
-      for (let index = this.baseNode.children.length - 1; index >= 0; index -= 1) {
-        this.baseNode.children[index].remove();
+      while (this.baseNode.children.length) {
+        this.baseNode.lastChild?.remove();
       }
       this.baseNode = null;
     }
