@@ -1,6 +1,7 @@
 import { format, Locale } from 'date-fns';
 import { LocaleKey, isLocaleKey } from './locale/keys';
 import AbstractComponent from './AbstractComponent';
+import toBcp47Locale from './toBcp47Locale';
 
 interface OptionalDateTimeFormat {
   date?: string;
@@ -86,6 +87,20 @@ class Clock extends AbstractComponent {
     this.dateSection.innerText = format(date, this.format.date, options);
   }
 
+  getFormat(): DateTimeFormat {
+    return { ...this.format };
+  }
+  setFormat(format: OptionalDateTimeFormat): void {
+    this.format = {
+      ...this.format,
+      ...format,
+    };
+    this.update();
+  }
+
+  getLocale(): string {
+    return toBcp47Locale(this.localeKey) || this.localeKey;
+  }
   setLocale(value: string): void {
     let localeKey: LocaleKey;
     try {
