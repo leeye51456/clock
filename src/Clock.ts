@@ -8,7 +8,7 @@ interface OptionalDateTimeFormat {
   time?: string;
 }
 
-interface DateTimeFormat extends OptionalDateTimeFormat {
+export interface DateTimeFormat extends OptionalDateTimeFormat {
   date: string;
   time: string;
 }
