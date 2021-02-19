@@ -20,9 +20,9 @@ abstract class AbstractComponent {
   erase(): void {
     if (this.baseNode) {
       this.release();
-  
-      for (const node of this.baseNode.children) {
-        node.remove();
+
+      for (let index = this.baseNode.children.length - 1; index >= 0; index -= 1) {
+        this.baseNode.children[index].remove();
       }
       this.baseNode = null;
     }
