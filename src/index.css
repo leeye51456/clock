@@ -47,6 +47,66 @@ main {
   overflow-y: auto;
 }
 
+.modal ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modal ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  margin-bottom: 20px;
+}
+
+.modal ul li label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.modal ul li label span {
+  flex-basis: 40%;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.modal ul li label input {
+  flex-basis: 60%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-left: 0.5em;
+  width: 0;
+}
+
+.modal .action {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  border-top: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.modal .action > * {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.modal .action button {
+  flex-grow: 1;
+}
+
+.modal .action > :first-child {
+  margin-left: 0;
+}
+.modal .action > :last-child {
+  margin-right: 0;
+}
+
 .clock {
   align-self: center;
   justify-self: center;
