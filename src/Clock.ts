@@ -1,6 +1,7 @@
 import { format, Locale } from 'date-fns';
 import { LocaleKey, isLocaleKey } from './locale/keys';
 import AbstractComponent from './AbstractComponent';
+import ClockSettingsModal from './ClockSettingsModal';
 import toBcp47Locale from './toBcp47Locale';
 
 interface OptionalDateTimeFormat {
@@ -48,6 +49,8 @@ class Clock extends AbstractComponent {
   constructor(options?: ClockOptions) {
     super();
 
+    this.handleClick = this.handleClick.bind(this);
+
     this.timeSection.classList.add('clock-time');
     this.dateSection.classList.add('clock-date');
 
@@ -69,13 +72,15 @@ class Clock extends AbstractComponent {
 
   protected drawChildren(): void {
     if (this.baseNode) {
+      this.baseNode.addEventListener('click', this.handleClick);
       this.intervalId = window.setInterval(this.update.bind(this), 1000);
       this.baseNode.append(this.timeSection, this.dateSection);
     }
   }
 
   protected release(): void {
-    if (this.intervalId !== null) {
+    if (this.baseNode && this.intervalId !== null) {
+      this.baseNode.removeEventListener('click', this.handleClick);
       window.clearInterval(this.intervalId);
     }
   }
@@ -130,6 +135,11 @@ class Clock extends AbstractComponent {
   setLocaleToFallback(): void {
     this.localeKey = 'enUS';
     this.localeObject = undefined;
+  }
+
+  private handleClick(): void {
+    const modal: ClockSettingsModal = new ClockSettingsModal(this);
+    modal.draw(document.querySelector('.modal-wrapper'));
   }
 }
 
