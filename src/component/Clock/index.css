@@ -1,0 +1,14 @@
+.clock {
+  align-self: center;
+  justify-self: center;
+}
+
+.clock-time {
+  text-align: center;
+  font-size: 15vw;
+}
+
+.clock-date {
+  text-align: center;
+  font-size: 5vw;
+}

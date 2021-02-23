@@ -1,4 +1,5 @@
 import AbstractComponent from '../AbstractComponent';
+import './index.css';
 
 abstract class AbstractModal extends AbstractComponent {
   protected wrapperNode: HTMLElement | null;

@@ -3,6 +3,7 @@ import { LocaleKey, isLocaleKey } from '../../locale/keys';
 import AbstractComponent from '../AbstractComponent';
 import ClockSettingsModal from '../modal/ClockSettingsModal';
 import toBcp47Locale from '../../util/toBcp47Locale';
+import './index.css';
 
 interface OptionalDateTimeFormat {
   date?: string;
