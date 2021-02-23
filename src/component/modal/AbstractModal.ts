@@ -1,4 +1,4 @@
-import AbstractComponent from './AbstractComponent';
+import AbstractComponent from '../AbstractComponent';
 
 abstract class AbstractModal extends AbstractComponent {
   protected wrapperNode: HTMLElement | null;

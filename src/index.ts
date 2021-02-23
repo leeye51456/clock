@@ -1,7 +1,7 @@
 import { register } from './swManager';
 import localeKeys, { LocaleKey } from './locale/keys';
-import toBcp47Locale from './toBcp47Locale';
-import Clock from './Clock';
+import toBcp47Locale from './util/toBcp47Locale';
+import Clock from './component/Clock';
 import './index.css';
 
 register();

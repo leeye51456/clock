@@ -1,8 +1,8 @@
 import { format, Locale } from 'date-fns';
-import { LocaleKey, isLocaleKey } from './locale/keys';
-import AbstractComponent from './AbstractComponent';
-import ClockSettingsModal from './ClockSettingsModal';
-import toBcp47Locale from './toBcp47Locale';
+import { LocaleKey, isLocaleKey } from '../../locale/keys';
+import AbstractComponent from '../AbstractComponent';
+import ClockSettingsModal from '../modal/ClockSettingsModal';
+import toBcp47Locale from '../../util/toBcp47Locale';
 
 interface OptionalDateTimeFormat {
   date?: string;
@@ -122,7 +122,7 @@ class Clock extends AbstractComponent {
 
     import(
       /* webpackChunkName: "locale/[request]" */
-      `./locale/modules/${localeKey}`
+      `../../locale/modules/${localeKey}`
     )
       .then((module) => {
         this.localeKey = localeKey;

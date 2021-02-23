@@ -1,5 +1,5 @@
-import AbstractModal from './AbstractModal';
-import Clock, { DateTimeFormat } from './Clock';
+import AbstractModal from '../AbstractModal';
+import Clock, { DateTimeFormat } from '../../Clock';
 
 function createListItem(title: string, form: HTMLElement): HTMLLIElement {
   const span: HTMLSpanElement = document.createElement('span');
