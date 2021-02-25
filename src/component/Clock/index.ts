@@ -1,8 +1,8 @@
 import { format, Locale } from 'date-fns';
-import { LocaleKey, isLocaleKey } from '../../locale/keys';
+import { LocaleKey } from '../../locale/keys';
 import AbstractComponent from '../AbstractComponent';
 import ClockSettingsModal from '../modal/ClockSettingsModal';
-import toBcp47Locale from '../../util/toBcp47Locale';
+import { toBcp47Locale, toDateFnsLocaleKey } from '../../util/LocaleConverter';
 import './index.css';
 
 interface OptionalDateTimeFormat {
@@ -18,19 +18,6 @@ export interface DateTimeFormat extends OptionalDateTimeFormat {
 interface ClockOptions {
   format?: OptionalDateTimeFormat;
   locale?: string;
-}
-
-// See https://tools.ietf.org/rfc/bcp/bcp47.txt
-function toLocaleKey(bcp47Locale: string): LocaleKey {
-  const codes: string[] = bcp47Locale.split('-');
-  while (codes.length > 0) {
-    const partialLocale: string = codes.join('');
-    if (isLocaleKey(partialLocale)) {
-      return partialLocale;
-    }
-    codes.pop();
-  }
-  throw RangeError();
 }
 
 class Clock extends AbstractComponent {
@@ -110,7 +97,7 @@ class Clock extends AbstractComponent {
   setLocale(value: string): void {
     let localeKey: LocaleKey;
     try {
-      localeKey = toLocaleKey(value);
+      localeKey = toDateFnsLocaleKey(value);
     } catch (error) {
       localeKey = 'enUS';
     }
