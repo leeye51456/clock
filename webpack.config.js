@@ -71,12 +71,6 @@ module.exports = (env, argv) => {
       host: '0.0.0.0',
       port: 3000,
     };
-
-    config.plugins.push(
-      new CleanWebpackPlugin({
-        cleanStaleWebpackAssets: false,
-      }),
-    );
   }
 
   if (argv.mode === 'production') {
