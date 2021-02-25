@@ -1,3 +1,6 @@
+import { LocaleKey } from './locale/keys';
+import { toDateFnsLocaleKey } from './util/LocaleConverter';
+
 const cacheName: string = 'clock-v0';
 const urlsToCache: string[] = [
   './',
@@ -5,6 +8,12 @@ const urlsToCache: string[] = [
   './index.css',
   './manifest.json',
 ];
+try {
+  const currentLocale: LocaleKey = toDateFnsLocaleKey(navigator.language);
+  if (currentLocale !== 'enUS') {
+    urlsToCache.push(`./locale/${currentLocale}.js`);
+  }
+} catch (error) {}
 
 self.addEventListener('install', (event: any) => {
   const promise: Promise<void> = caches.open(cacheName)
