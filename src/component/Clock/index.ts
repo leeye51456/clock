@@ -5,20 +5,15 @@ import ClockSettingsModal from '../modal/ClockSettingsModal';
 import { toBcp47Locale, toDateFnsLocaleKey } from '../../util/LocaleConverter';
 import './index.css';
 
-interface OptionalDateTimeFormat {
-  date?: string;
-  time?: string;
-}
-
-export interface DateTimeFormat extends OptionalDateTimeFormat {
+export type DateTimeFormat = {
   date: string;
   time: string;
-}
+};
 
-interface ClockOptions {
-  format?: OptionalDateTimeFormat;
-  locale?: string;
-}
+type ClockOptions = {
+  format: DateTimeFormat;
+  locale: LocaleKey;
+};
 
 class Clock extends AbstractComponent {
   private intervalId: number | null = null;
@@ -42,10 +37,9 @@ class Clock extends AbstractComponent {
     this.timeSection.classList.add('clock-time');
     this.dateSection.classList.add('clock-date');
 
-    this.format = {
-      ...this.format,
-      ...options?.format,
-    };
+    if (options) {
+      this.format = { ...options.format };
+    }
 
     try {
       if (typeof options?.locale === 'string') {
@@ -83,7 +77,7 @@ class Clock extends AbstractComponent {
   getFormat(): DateTimeFormat {
     return { ...this.format };
   }
-  setFormat(format: OptionalDateTimeFormat): void {
+  setFormat(format: Partial<DateTimeFormat>): void {
     this.format = {
       ...this.format,
       ...format,
