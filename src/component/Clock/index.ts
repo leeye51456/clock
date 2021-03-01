@@ -1,6 +1,7 @@
 import { format, Locale } from 'date-fns';
+import { ModuleData } from '../../db';
 import { LocaleKey } from '../../locale/keys';
-import AbstractComponent from '../AbstractComponent';
+import AbstractStorableComponent from '../AbstractStorableComponent';
 import ClockSettingsModal from '../modal/ClockSettingsModal';
 import { toBcp47Locale, toDateFnsLocaleKey } from '../../util/LocaleConverter';
 import './index.css';
@@ -15,7 +16,7 @@ type ClockOptions = {
   locale: LocaleKey;
 };
 
-class Clock extends AbstractComponent {
+class Clock extends AbstractStorableComponent<ClockOptions> {
   private intervalId: number | null = null;
 
   private timeSection: HTMLElement = document.createElement('section');
@@ -29,8 +30,8 @@ class Clock extends AbstractComponent {
   private localeKey: LocaleKey = 'enUS';
   private localeObject: Locale | undefined = undefined;
 
-  constructor(options?: ClockOptions) {
-    super();
+  constructor(options?: ClockOptions, key?: number) {
+    super(key);
 
     this.handleClick = this.handleClick.bind(this);
 
@@ -82,6 +83,7 @@ class Clock extends AbstractComponent {
       ...this.format,
       ...format,
     };
+    this.putIntoDatabase();
     this.update();
   }
 
@@ -112,12 +114,23 @@ class Clock extends AbstractComponent {
       this.localeObject = undefined;
     }
 
+    this.putIntoDatabase();
     this.update();
   }
 
   private handleClick(): void {
     const modal: ClockSettingsModal = new ClockSettingsModal(this);
     modal.draw(document.querySelector('.modal-wrapper'));
+  }
+
+  protected get moduleData(): ModuleData<ClockOptions> {
+    return {
+      type: this.constructor.name,
+      data: {
+        format: { ...this.format },
+        locale: this.localeKey,
+      },
+    };
   }
 }
 

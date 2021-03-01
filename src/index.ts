@@ -1,10 +1,22 @@
 import { register } from './swManager';
+import { ModuleData, openDatabase } from './db';
 import localeKeys, { LocaleKey } from './locale/keys';
 import { toBcp47Locale } from './util/LocaleConverter';
 import Clock from './component/Clock';
 import './index.css';
 
 register();
+
+openDatabase(
+  (key: number, moduleData: ModuleData) => {
+    const module = new Clock(moduleData.data, key);
+    module.draw(document.querySelector('.clock'));
+  },
+  () => {
+    const clock = new Clock();
+    clock.draw(document.querySelector('.clock'));
+  }
+);
 
 const localesDataList: HTMLDataListElement | null = document.querySelector('datalist#locales');
 if (localesDataList) {
@@ -17,6 +29,3 @@ if (localesDataList) {
     }
   });
 }
-
-const clock = new Clock();
-clock.draw(document.querySelector('.clock'));
