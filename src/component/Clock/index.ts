@@ -27,8 +27,8 @@ class Clock extends AbstractComponent {
   private dateSection: HTMLElement = document.createElement('section');
 
   private format: DateTimeFormat = {
-    date: 'y-MM-dd',
-    time: 'HH:mm:ss',
+    date: 'PPPP',
+    time: 'pp',
   };
 
   private localeKey: LocaleKey = 'enUS';
