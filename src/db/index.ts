@@ -7,7 +7,6 @@ const databaseName: string = 'clock';
 const storeName: string = 'module';
 let db: IDBDatabase | null = null;
 
-// TODO - Eliminate callback hell
 export function openDatabase(
   loadFromData: (key: number, moduleData: ModuleData) => any,
   defaultOperation: () => any,
