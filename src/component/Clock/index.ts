@@ -88,7 +88,7 @@ class Clock extends AbstractComponent {
   getLocale(): string {
     return toBcp47Locale(this.localeKey) || this.localeKey;
   }
-  setLocale(value: string): void {
+  async setLocale(value: string): Promise<void> {
     let localeKey: LocaleKey;
     try {
       localeKey = toDateFnsLocaleKey(value);
@@ -96,27 +96,23 @@ class Clock extends AbstractComponent {
       localeKey = 'enUS';
     }
 
-    if (localeKey === 'enUS') {
-      this.setLocaleToFallback();
-      this.update();
-      return;
+    try {
+      if (localeKey === 'enUS') {
+        throw new Error();
+      }
+
+      const module = await import(
+        /* webpackChunkName: "locale/[request]" */
+        `../../locale/modules/${localeKey}`
+      );
+      this.localeKey = localeKey;
+      this.localeObject = module.default;
+    } catch (error) {
+      this.localeKey = 'enUS';
+      this.localeObject = undefined;
     }
 
-    import(
-      /* webpackChunkName: "locale/[request]" */
-      `../../locale/modules/${localeKey}`
-    )
-      .then((module) => {
-        this.localeKey = localeKey;
-        this.localeObject = module.default;
-      })
-      .catch(() => this.setLocaleToFallback())
-      .then(() => this.update());
-  }
-
-  setLocaleToFallback(): void {
-    this.localeKey = 'enUS';
-    this.localeObject = undefined;
+    this.update();
   }
 
   private handleClick(): void {
