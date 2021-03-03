@@ -2,6 +2,7 @@ import { register } from './swManager';
 import { ModuleData, initializeFromDatabase } from './db';
 import localeKeys, { LocaleKey } from './locale/keys';
 import { toBcp47Locale } from './util/LocaleConverter';
+import getModuleByName from './util/getModuleByName';
 import Clock from './component/Clock';
 import './index.css';
 
@@ -9,8 +10,9 @@ register();
 
 initializeFromDatabase(
   (key: number, moduleData: ModuleData) => {
-    const module = new Clock(moduleData.data, key);
-    module.draw(document.querySelector('.clock'));
+    const Module = getModuleByName(moduleData.type);
+    const module = new Module(moduleData.data, key);
+    module.draw(document.querySelector(`.${moduleData.type.toLowerCase()}`));
   },
   () => {
     const clock = new Clock();
