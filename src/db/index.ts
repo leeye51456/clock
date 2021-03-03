@@ -7,7 +7,7 @@ const databaseName: string = 'clock';
 const storeName: string = 'module';
 let db: IDBDatabase | null = null;
 
-export function openDatabase(
+export function initializeFromDatabase(
   loadFromData: (key: number, moduleData: ModuleData) => any,
   defaultOperation: () => any,
 ): void {

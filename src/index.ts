@@ -1,5 +1,5 @@
 import { register } from './swManager';
-import { ModuleData, openDatabase } from './db';
+import { ModuleData, initializeFromDatabase } from './db';
 import localeKeys, { LocaleKey } from './locale/keys';
 import { toBcp47Locale } from './util/LocaleConverter';
 import Clock from './component/Clock';
@@ -7,7 +7,7 @@ import './index.css';
 
 register();
 
-openDatabase(
+initializeFromDatabase(
   (key: number, moduleData: ModuleData) => {
     const module = new Clock(moduleData.data, key);
     module.draw(document.querySelector('.clock'));
